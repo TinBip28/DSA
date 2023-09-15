@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     //ENTITY
     private Forest forest;
     private final int maxScreenRow = 10;
-    private final int maxScreenCol = 6;
+    private final int maxScreenCol = 8;
 
     //SHOW SCREEN
     private final int tileSize = 48;
@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread threadMain;
 
     //FPS
-    private int fps = 1;
+    private int fps = 5;
 
     public GamePanel() {
         this.setName(name);
@@ -38,8 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         forest = Forest.getInstance(maxScreenRow, maxScreenCol);
 //        forest.add(EAnimal.TIGER, 3);
-        forest.add(EAnimal.FISH, 6);
-        forest.add(EAnimal.BEAR, 1);
+        forest.add(EAnimal.FISH, 15);
+        forest.add(EAnimal.BEAR, 6);
     }
 
     private void startGameThread() {

@@ -1,12 +1,12 @@
 package exercise6.p_2_32.entity;
 
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Forest {
     private static Forest instance;
     private Animal[][] data;
-    private final Random random;
+    private Random random;
 
     private Forest(int maxX, int maxY) {
         this.data = new Animal[maxX][maxY];
@@ -25,37 +25,18 @@ public class Forest {
 
     public Forest add(EAnimal eAnimal, int quantity) {
         switch (eAnimal) {
-            case TIGER -> {
-                for (int i = 0; i < quantity; i++) {
-                    Animal tiger = new Tiger("Tiger" + i, randomGender(), random.nextInt(4, 8));
-                    int x, y;
-                    do {
-                        x = random.nextInt(0, data.length);
-                        y = random.nextInt(0, data[0].length);
-                    } while (data[x][y] != null);
-                    add(tiger, x, y);
-                }
-            }
             case FISH -> {
                 for (int i = 0; i < quantity; i++) {
-                    Animal fish = new Fish("Fish" + i, randomGender(), random.nextInt(0, 3));
-                    int x, y;
-                    do {
-                        x = random.nextInt(0, data.length);
-                        y = random.nextInt(0, data[0].length);
-                    } while (data[x][y] != null);
-                    add(fish, x, y);
+                    boolean isMale = random.nextBoolean();
+                    Animal fish = new Fish("fist" + i, isMale, random.nextInt(1, 9));
+                    addAnimal(fish);
                 }
             }
             case BEAR -> {
                 for (int i = 0; i < quantity; i++) {
-                    Animal bear = new Bear("Bear" + i, randomGender(), random.nextInt(6, 10));
-                    int x, y;
-                    do {
-                        x = random.nextInt(0, data.length);
-                        y = random.nextInt(0, data[0].length);
-                    } while (data[x][y] != null);
-                    add(bear, x, y);
+                    boolean isMale = random.nextBoolean();
+                    Animal bear = new Bear("fist" + i, isMale, random.nextInt(15, 25));
+                    addAnimal(bear);
                 }
             }
         }
@@ -96,18 +77,12 @@ public class Forest {
                         //Go and Reproduction
                         if (animal.isMale() != oldAnimal.isMale()) {
                             // Reproduction
-                            int radius = 1;
-                            while (true) {
-                                int newAniX = newX + random.nextInt(radius * 2 + 1) - radius;
-                                int newAniY = newX + random.nextInt(radius * 2 + 1) - radius;
-
-                                if (isValueNull(newAniX, newAniY) && !isValuePos(newAniX, newAniY)) {
-                                    data[newAniX][newAniY] = createNewAnimal(oldAnimal);
-                                    return;
-                                }
+                            int newAniX = random.nextInt(data.length);
+                            int newAniY = random.nextInt(data[0].length);
+                            if (isValueNull(newAniX, newAniY) && !isValuePos(newAniX, newAniY)) {
+                                data[newAniX][newAniY] = animal;
                             }
-                        } else
-                            System.out.println("Can't reproduce because they are of the same sex");
+                        }
                     } else {
                         // Go an attack
                         if (animal.compareTo(oldAnimal) > 0) {
@@ -117,9 +92,6 @@ public class Forest {
                         } else if (animal.compareTo(oldAnimal) < 0) {
                             data[x][y] = null;
                             isGo[x][y] = true;
-                        } else {
-                            data[x][y] = random(animal, oldAnimal);
-                            isGo[x][y] = true;
                         }
                     }
                 }
@@ -127,31 +99,7 @@ public class Forest {
                 System.out.println("The forest limit has been exceeded");
 
         }
-    }
 
-    private Animal random(Animal animal, Animal oldAnimal) {
-        int chance = random.nextInt(0, 2);
-        if (chance == 0) {
-            return animal;
-        }
-        return oldAnimal;
-    }
-
-    private boolean randomGender() {
-        int chance = random.nextInt(0, 2);
-        return chance == 0;
-    }
-
-
-    public void go2() {
-        Animal[][] newData = new Animal[data.length][data[0].length];
-        for (int x = 0; x < newData.length; x++) {
-            for (int y = 0; y < newData[0].length; y++) {
-                int newX = random.nextInt(3) - 1 + x;
-                int newY = random.nextInt(3) - 1 + y;
-                newData[newX][newY] = data[x][y];
-            }
-        }
     }
 
     private boolean isValueNull(int x, int y) {
@@ -162,14 +110,25 @@ public class Forest {
         return x < 0 || x >= data.length || y < 0 || y >= data[0].length;
     }
 
-    private Animal createNewAnimal(Animal animal) {
+    public Animal addAnimal(Animal animal) {
         int x = 0, y = 0;
-        while (isValueNull(x, y) && isValuePos(x, y)) {
-            x = random.nextInt(data.length - 1);
-            y = random.nextInt(data[0].length - 1);
-        }
+        do {
+            x = random.nextInt(data.length);
+            y = random.nextInt(data[0].length);
+        } while (!isValueNull(x, y));
         data[x][y] = animal;
         return data[x][y];
     }
 
+    @Override
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[0].length; j++) {
+                s += data[i][j] + " ";
+            }
+            s += "\n";
+        }
+        return s;
+    }
 }

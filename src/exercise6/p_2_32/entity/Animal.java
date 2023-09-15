@@ -3,13 +3,14 @@ package exercise6.p_2_32.entity;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.module.InvalidModuleDescriptorException;
 import java.util.ConcurrentModificationException;
 import java.util.Objects;
 
 public class Animal implements Comparable {
     protected String name;
     protected boolean isMale;
-    private double power;
+    private final double power;
     private BufferedImage image;
 
     public Animal(String name, boolean isMale, double power) {
@@ -18,7 +19,6 @@ public class Animal implements Comparable {
         this.power = power;
         loadImage();
     }
-
     public String getName() {
         return name;
     }
@@ -52,12 +52,9 @@ public class Animal implements Comparable {
             throw new ConcurrentModificationException();
         }
     }
-
     public void loadImage() {
         try {
-            if (this instanceof Tiger)
-                image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/exercise6/image/entity/tiger.png")));
-            else if (this instanceof Fish)
+            if (this instanceof Fish)
                 image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/exercise6/image/entity/fish.jpg")));
             else if (this instanceof Bear)
                 image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/exercise6/image/entity/bear.jpg")));
