@@ -1,6 +1,5 @@
 package exercise6.p_2_32.entity;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Forest {
@@ -89,7 +88,7 @@ public class Forest {
                             data[newX][newY] = animal;
                             data[x][y] = null;
                             isGo[newX][newY] = true;
-                        } else if (animal.compareTo(oldAnimal) < 0) {
+                        } else if (animal.compareTo(oldAnimal) <= 0) {
                             data[x][y] = null;
                             isGo[x][y] = true;
                         }

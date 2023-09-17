@@ -1,21 +1,14 @@
 package hw1_ex2;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class genericArray<T> {
-    private T[] arr;
-    private Random random;
-
+    private final T[] arr;
     public genericArray(T[] arr) {
         this.arr = arr;
     }
 
-    public T[] getArr() {
-        return arr;
-    }
-
+    //Tìm các phần tử trong mảng là số hoàn hảo mà không bị trùng lặp được sắp xếp theo giá trị tăng dần
     Set<Integer> getPerfectElements() {
         Set<Integer> res = new HashSet<>();
         for (T i : arr) {
