@@ -49,12 +49,19 @@ public class Forest {
     }
 
     public void go() {
+        int count = 0;
         boolean[][] isGo = new boolean[data.length][data[0].length];
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
                 go(i, j, isGo);
+                if (data[i][j] instanceof Fish) {
+                    count++;
+                }
             }
         }
+     if (count == 0){
+         System.exit(1);
+     }
     }
 
     private void go(int x, int y, boolean[][] isGo) {
@@ -96,9 +103,7 @@ public class Forest {
                 }
             } else
                 System.out.println("The forest limit has been exceeded");
-
         }
-
     }
 
     private boolean isValueNull(int x, int y) {
