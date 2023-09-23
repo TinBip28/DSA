@@ -24,8 +24,16 @@ public class SortStrategy {
     public void sort(int[] data) {
         sortee.sort(data);
     }
-
-    public void sort(int[] data, int l, int r) {
-        sortee.sort(data, l, r);
+    public void getSwapNums() {
+        System.out.println("SwapCount: " + sortee.getSwapCount());
     }
+
+    public void getCompareNums() {
+        System.out.println("CompareCount: " + sortee.getCompareNums());
+    }
+
+    public void getTimes() {
+        System.out.println("Times: " + sortee.getTimes());
+    }
+    
 }

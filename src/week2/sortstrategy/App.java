@@ -6,7 +6,7 @@ import java.util.Random;
 public class App {
     private static int[] randomIntArray() {
         Random random = new Random();
-        int n = random.nextInt(10);
+        int n = random.nextInt(1000);
         int[] data = new int[n];
         for (int i = 0; i < n; i++) {
             data[i] = random.nextInt(0, 100);
@@ -22,8 +22,12 @@ public class App {
         int[] data = randomIntArray();
         SortStrategy sortStrategy = SortStrategy.getInstance();
 
-        ISort bubbleSort = new BubbleSort();
-        sortStrategy.setSortee(bubbleSort);
+        ISort quickSort = new QuickSort();
+        sortStrategy.setSortee(quickSort);
         sortStrategy.sort(data);
+        System.out.println(ArrayToString(data));
+        System.out.println(quickSort.getTimes());
+        System.out.println(quickSort.getCompareNums());
+        System.out.println(quickSort.getSwapCount());
     }
 }

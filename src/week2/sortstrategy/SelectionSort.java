@@ -1,26 +1,40 @@
 package week2.sortstrategy;
 
-public class SelectionSort implements ISort{
-    @Override
-    public void sort(int[] data) {
-        int swapCount = 0;
+public class SelectionSort implements ISort {
+    private int swapCount;
+    private int compareNums;
+    private long times;
 
-        for (int i = 1; i < data.length; ++i) {
-            int key = data[i];
-            int j = i - 1;
-            while (j >= 0 && data[j] > key) {
-                data[j + 1] = data[j];
-                j = j - 1;
-                swapCount++;
-            }
-            data[j + 1] = key;
-            swapCount++;
-        }
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public long getTimes() {
+        return times;
+    }
+
+    public int getCompareNums() {
+        return compareNums;
     }
 
     @Override
-    public void sort(int[] data, int l, int r) {
-
+    public void sort(int[] data) {
+        long start = System.nanoTime();
+        for (int i = 0; i < data.length - 1; i++) {
+            int minIdx = i;
+            for (int j = i + 1; j < data.length; j++) {
+                compareNums++;
+                if (data[j] < data[minIdx]) {
+                    minIdx = j;
+                }
+                int temp = data[minIdx];
+                data[minIdx] = data[i];
+                data[i] = temp;
+                swapCount++;
+            }
+        }
+        long end = System.nanoTime();
+        times = end - start;
     }
 
 

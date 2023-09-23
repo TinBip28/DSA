@@ -1,12 +1,30 @@
 package week2.sortstrategy;
 
 public class MergeSort implements ISort {
-    @Override
-    public void sort(int[] arr) {
+    private int swapCount;
+    private int compareNums;
+    private long times;
 
+    public int getSwapCount() {
+        return swapCount;
+    }
+
+    public long getTimes() {
+        return times;
+    }
+
+    public int getCompareNums() {
+        return compareNums;
     }
 
     @Override
+    public void sort(int[] arr) {
+        long start = System.nanoTime();
+        sort(arr, 0, arr.length - 1);
+        long end = System.nanoTime();
+        times = end - start;
+    }
+
     public void sort(int[] data, int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
@@ -36,16 +54,16 @@ public class MergeSort implements ISort {
             } else {
                 data[k] = right[j];
                 j++;
+                swapCount += (mid - i + 1);
             }
             k++;
+            compareNums++;
         }
-
         while (i < n1) {
             data[k] = left[i];
             i++;
             k++;
         }
-
         while (j < n2) {
             data[k] = right[j];
             j++;
