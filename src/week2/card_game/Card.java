@@ -28,7 +28,7 @@ public class Card implements Comparable<Card> {
     }
 
     public Card getCard() {
-        return new Card(getSuit(), getRank());
+        return new Card(this.suit, this.rank);
     }
 
     @Override
