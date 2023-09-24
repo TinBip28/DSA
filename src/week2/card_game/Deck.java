@@ -1,33 +1,25 @@
 package week2.card_game;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Deck {
-    private Card[] cardDeck;
-
     public static void main(String[] args) {
-        Card[] deck = new Card[20];
-        for (int i = 0; i < 20; i++) {
-            deck[i] = new Card();
+        Card[] cards = new Card[20];
+        for (int i = 0; i < cards.length; i++) {
+            cards[i] = new Card();
         }
-        System.out.println(Arrays.toString(deck));
-        Arrays.sort(deck);
-        System.out.println(Arrays.toString(deck));
+        System.out.println(Arrays.toString(cards));
+        CardComparison cardComparison = new CardComparison();
+        Arrays.sort(cards, cardComparison);
+        System.out.println(Arrays.toString(cards));
+
+        Card[] cards1 = new Card[25];
+        for (int i = 0; i < cards1.length; i++) {
+            cards1[i] = new Card();
+        }
+        ISort quick = new QuickSort();
+        quick.sort(cards1);
+        System.out.println(Arrays.toString(cards1));
     }
 
-    public Card[] createData(int length) {
-        return new Card[2];
-    }
-
-    public boolean cardCheck(Card o) {
-        if (o == null) {
-            return false;
-        }
-        for (int i = 0; i < cardDeck.length; i++) {
-            if (cardDeck[i].getClass() == o.getClass()) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
