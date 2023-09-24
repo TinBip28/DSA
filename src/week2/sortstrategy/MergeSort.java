@@ -35,39 +35,28 @@ public class MergeSort implements ISort {
     }
 
     public void merge(int[] data, int low, int mid, int high) {
-        int n1 = mid - low + 1;
-        int n2 = high - mid;
-
-        int[] left = new int[n1];
-        int[] right = new int[n2];
-        for (int i = 0; i < n1; ++i)
-            left[i] = data[low + i];
-        for (int j = 0; j < n2; ++j)
-            right[j] = data[mid + 1 + j];
-        int i = 0;
-        int j = 0;
-        int k = low;
-        while (i < n1 && j < n2) {
-            if (left[i] <= right[j]) {
-                data[k] = left[i];
-                i++;
-            } else {
-                data[k] = right[j];
-                j++;
-                swapCount += (mid - i + 1);
-            }
-            k++;
+        int n = high - low + 1;
+        int[] b = new int[n];
+        int left = low, right = mid + 1, bIdx = 0;
+        while (left <= mid && right <= high) {
+            if (data[left] <= data[right])
+                b[bIdx++] = data[left++];
+            else b[bIdx] = data[right++];
+            swapCount++;
             compareNums++;
         }
-        while (i < n1) {
-            data[k] = left[i];
-            i++;
-            k++;
+        while (left <= mid) {
+            b[bIdx++] = data[left++];
+            swapCount++;
         }
-        while (j < n2) {
-            data[k] = right[j];
-            j++;
-            k++;
+
+        while (right <= high){
+            b[bIdx++] = data[right++];
+            swapCount++;
+        }
+
+        for (int k = 0; k < n; k++) {
+            data[low + k] = b[k];
         }
     }
 }

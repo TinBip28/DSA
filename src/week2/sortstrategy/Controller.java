@@ -15,31 +15,42 @@ import java.util.Random;
 
 
 public class Controller extends JPanel implements Runnable {
-    public final Random random = new Random();
-    public final String programName = "Sort Strategy";
-    public final String title = "Thuật toán sắp xếp";
-    public final String xAxis = "Số lần sắp xếp";
-    public final String yAxis = "Thời gian thực hiện";
+    public final String nameProgram = "Sorting";
+    public final String nameChart = "So sánh các thuật toán sắp xếp";
+    public final String xAxis = "Số phần tử sắp xếp";
+    private final String yAxis = "Thời gian sắp xếp";
 
-    public final int maxWidth = 1200;
-    public final int maxHeight = 700;
-    public Dimension screen;
-
+    public final int maxWidth = 1000;
+    public final int maxHeight = 720;
     public Thread threadMain;
-    private int length = 0;
+
+    public double FPS = 60;
+
     private XYSeries bubble;
-    private XYSeries selection;
+    private XYSeries bubble2;
     private XYSeries insertion;
+    private XYSeries selection;
     private XYSeries merge;
     private XYSeries quick;
 
-    public Controller() {
-        this.setName(programName);
-        screen = new Dimension(maxWidth, maxHeight);
-        this.setPreferredSize(screen);
-        createData();
-        startThread();
+    private int number = 1;
 
+    public Controller() {
+        this.setName(nameProgram);
+        this.setPreferredSize(new Dimension(maxWidth + 10, maxHeight + 10));
+
+        loadData();
+
+        startThread();
+    }
+
+    private void loadData() {
+        bubble = new XYSeries("Bubble Sort");
+        bubble2 = new XYSeries("Bubble Sort2");
+        insertion = new XYSeries("Insertion Sort");
+        selection = new XYSeries("Selection Sort");
+        quick = new XYSeries("Quick Sort");
+        merge = new XYSeries("Merge Sort");
     }
 
     public void startThread() {
@@ -47,83 +58,85 @@ public class Controller extends JPanel implements Runnable {
         threadMain.start();
     }
 
-
     @Override
     public void run() {
         while (threadMain != null) {
-            if (length == 1_000) break;
-            getData();
+            if (number == 1_000_000) break;
+            update();
             repaint();
+            try {
+                Thread.sleep((long) (1000 / FPS));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            int delay = 1000 / 60;
-            Thread.sleep(delay);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
-    private void createData() {
-        bubble = new XYSeries("Bubble Sort");
-        insertion = new XYSeries("Insertion Sort");
-        selection = new XYSeries("Selection Sort");
-        quick = new XYSeries("Quick Sort");
-        merge = new XYSeries("Merge Sort");
-    }
 
-    private int[] randomIntArray() {
-        int[] data = new int[++length];
-        for (int i = 0; i < data.length; i++) {
-            data[i] = random.nextInt(1_000_000);
-        }
-        return data;
-    }
+    private void update() {
+        int[] array = createData();
 
-    private void getData() {
-        int[] data = randomIntArray();
-
-        int[] copy = Arrays.copyOf(data, data.length);
+        int[] arraySort = Arrays.copyOf(array, array.length);
         ISort bubbleSort = new BubbleSort();
-        bubbleSort.sort(copy);
-        bubble.add(length, bubbleSort.getTimes());
+        bubbleSort.sort(arraySort);
+        bubble.add(number, bubbleSort.getTimes());
 
-        copy = Arrays.copyOf(data, data.length);
+        arraySort = Arrays.copyOf(array, array.length);
         ISort insertionSort = new InsertionSort();
-        insertionSort.sort(copy);
-        bubble.add(length, insertionSort.getTimes());
+        insertionSort.sort(arraySort);
+        insertion.add(number, insertionSort.getTimes());
 
-        copy = Arrays.copyOf(data, data.length);
+        arraySort = Arrays.copyOf(array, array.length);
         ISort selectionSort = new SelectionSort();
-        selectionSort.sort(copy);
-        bubble.add(length, selectionSort.getTimes());
+        selectionSort.sort(arraySort);
+        selection.add(number, selectionSort.getTimes());
 
-        copy = Arrays.copyOf(data, data.length);
+        arraySort = Arrays.copyOf(array, array.length);
         ISort mergeSort = new MergeSort();
-        mergeSort.sort(copy);
-        bubble.add(length, mergeSort.getTimes());
+        mergeSort.sort(arraySort);
+        merge.add(number, mergeSort.getTimes());
 
-        copy = Arrays.copyOf(data, data.length);
+        arraySort = Arrays.copyOf(array, array.length);
         ISort quickSort = new QuickSort();
-        quickSort.sort(copy);
-        bubble.add(length, quickSort.getTimes());
+        quickSort.sort(arraySort);
+        quick.add(number, quickSort.getTimes());
+    }
+
+    private int[] createData() {
+        int[] array = new int[number += 1_000];
+        Random rd = new Random();
+        for (int i = 0; i < array.length; i++) {
+            array[i] = rd.nextInt(1_000_000);
+        }
+        return array;
     }
 
     @Override
-    protected void printComponent(Graphics g) {
-        super.printComponent(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-        XYSeriesCollection data = new XYSeriesCollection();
-        data.addSeries(bubble);
-        data.addSeries(insertion);
-        data.addSeries(selection);
-        data.addSeries(merge);
-        data.addSeries(quick);
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(bubble);
+        dataset.addSeries(bubble2);
+        dataset.addSeries(insertion);
+        dataset.addSeries(selection);
+        dataset.addSeries(merge);
+        dataset.addSeries(quick);
 
-        JFreeChart jFreeChart = ChartFactory.createXYLineChart(title, xAxis, yAxis, data, PlotOrientation.VERTICAL, true, true, false);
 
-        ChartPanel chartPanel = new ChartPanel(jFreeChart);
-        chartPanel.setPreferredSize(screen);
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                nameChart,
+                xAxis,
+                yAxis,
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(maxWidth, maxHeight));
         add(chartPanel);
     }
 }
