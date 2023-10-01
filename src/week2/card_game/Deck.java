@@ -15,7 +15,6 @@ public class Deck {
                 list.add(new Card(suit, rank));
             }
         }
-        Collections.shuffle(list);
         cards = new Card[52];
         for (int i = 0; i < list.size(); i++) {
             cards[i] = list.get(i);
@@ -30,7 +29,7 @@ public class Deck {
         for (int i = 0; i < cards.length; i++) {
             do {
                 cards[i] = new Card();
-            } while (cards[i].getRank() <= M && checkCards(cards,cards[i]));
+            } while (cards[i].getRank() <= M && checkCards(cards, cards[i]));
         }
     }
 
@@ -45,5 +44,14 @@ public class Deck {
 
     public Card[] getDeck() {
         return cards;
+    }
+
+    public void shuffleCard() {
+        List<Card> list = new ArrayList<>(Arrays.stream(cards).toList());
+        Collections.shuffle(list);
+        cards = new Card[52];
+        for (int i = 0; i < list.size(); i++) {
+            cards[i] = list.get(i);
+        }
     }
 }

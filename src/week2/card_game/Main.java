@@ -5,11 +5,10 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) throws Exception {
         Deck deck = new Deck();
-        Card[] cards = deck.getDeck();
-        System.out.println(Arrays.toString(cards));
-        ISort merge = new MergeSort();
-        merge.sort(cards);
-        System.out.println(Arrays.toString(cards));
+
+        System.out.println(Arrays.toString(deck.getDeck()));
+        deck.shuffleCard();
+        System.out.println(Arrays.toString(deck.getDeck()));
 
 
         System.out.println();
