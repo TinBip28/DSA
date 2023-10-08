@@ -10,15 +10,18 @@ public class SimpleArrayList<T> implements ListInterface<T> {
 
     public SimpleArrayList() {
         array = (T[]) new Object[defaultSize];
-        n = 0;
+    }
+
+    public SimpleArrayList(int capacity) {
+        array = (T[]) new Object[capacity];
     }
 
     @Override
-    public void add(Object data) {
-        if (n == size()) {
+    public void add(T data) {
+        if (array.length == size()) {
             enlarge();
         }
-        array[n++] = (T) data;
+        array[n++] = data;
     }
 
     @Override
@@ -28,43 +31,37 @@ public class SimpleArrayList<T> implements ListInterface<T> {
     }
 
     @Override
-    public void set(int i, Object data) {
-        checkBoundaries(i,size());
-        array[i] = (T) data;
+    public void set(int i, T data) {
+        checkBoundaries(i, size());
+        if (size() == array.length) {
+            enlarge();
+        }
+        array[i] = data;
     }
 
     @Override
     public void remove(Object data) {
-        int count = 0;
-        for (T t : array) {
-            if (t == data) {
-                count++;
+        int index = 0;
+        for (int i = 0; i < size(); i++) {
+            if (data.equals(array[i])) {
+                index = i;
             }
         }
-        T[] another = (T[]) new Object[size() - count];
-        for (int i = 0, k = 0; i < size(); i++) {
-            if (array[i] == data) {
-                continue;
-            }
-            another[k++] = array[i];
+
+        for (int i = index; i < size() - 1; i++) {
+            array[index] = array[index + 1];
         }
-        array = Arrays.copyOf(another, another.length);
     }
 
     @Override
     public void isContain(Object data) {
-        int count = 0;
-        for (T i : array) {
-            if (i == data) {
-                count++;
+        for (T ele : array) {
+            if (data.equals(ele)){
+                System.out.println("Is contain");
                 break;
             }
         }
-        if (count == 1) {
-            System.out.println("Array contain data");
-        } else {
-            System.out.println("Array not contain data");
-        }
+        System.out.println("Is not contain");
     }
 
     @Override
@@ -74,15 +71,12 @@ public class SimpleArrayList<T> implements ListInterface<T> {
 
     @Override
     public boolean isEmpty() {
-        return n == 0;
+        return size() == 0;
     }
 
     @Override
     public Iterator<T> iterator() {
-        if (hasNext()) {
-            return (Iterator<T>) array[n++];
-        }
-        return null;
+        return new MyArrayListIterator(array);
     }
 
     public boolean hasNext() {
