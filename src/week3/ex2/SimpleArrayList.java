@@ -10,6 +10,7 @@ public class SimpleArrayList<T> implements ListInterface<T> {
 
     public SimpleArrayList() {
         array = (T[]) new Object[defaultSize];
+        n = 0;
     }
 
     @Override
@@ -22,23 +23,14 @@ public class SimpleArrayList<T> implements ListInterface<T> {
 
     @Override
     public Object get(int i) {
-        try {
-            checkBoundaries(i, size());
-            return array[i];
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Out of index");
-        }
-        return null;
+        checkBoundaries(i, size());
+        return array[i];
     }
 
     @Override
     public void set(int i, Object data) {
-        try {
-            checkBoundaries(i, size());
-            array[i] = (T) data;
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Out of index");
-        }
+        checkBoundaries(i,size());
+        array[i] = (T) data;
     }
 
     @Override

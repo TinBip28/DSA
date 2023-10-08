@@ -46,6 +46,50 @@ public class Ex28 {
             p.next.prev = temp;
             p.next = temp;
         }
+
+        public void deleteAt(int index) {
+            Node temp = head;
+            Node ptr = temp.next;
+            if (index == 0) {
+                head = null;
+            }
+            if (index == 1) {
+                temp.next.prev = null;
+                head = head.next;
+            }
+            for (int i = 1; i < (index - 1); i++) {
+                temp = ptr;
+                ptr = ptr.next;
+            }
+            temp.next = ptr.next;
+        }
+
+        public void sortedInsert(int x) {
+            Node temp = new Node(null, x, null);
+            if (head == null) {
+                head = temp;
+                tail = temp;
+            }
+            if (x < head.data) {
+                temp.next = head;
+                head.prev = temp;
+                head = temp;
+            }
+            Node curr = head;
+            while (curr.next != null && x > curr.next.data) {
+                curr = curr.next;
+            }
+            if (curr.next == null) {
+                temp.prev = curr;
+                curr.next = temp;
+                tail = temp;
+            } else {
+                temp.next = curr.next;
+                temp.prev = curr;
+                curr.next.prev = temp;
+                curr.next = temp;
+            }
+        }
     }
 
     static class Node {
@@ -69,12 +113,18 @@ public class Ex28 {
             x = input.nextInt();
             list.addTail(x);
         }
+        list.printList();
         int k = input.nextInt();
         x = input.nextInt();
         if (k == 0) list.addHead(x);
         else if (k == n) list.addTail(x);
         else list.addAt(k, x);
         list.printList();
-
+        list.deleteAt(2);
+        System.out.println();
+        list.printList();
+        System.out.println();
+        list.sortedInsert(8);
+        list.printList();
     }
 }
