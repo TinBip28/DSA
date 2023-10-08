@@ -20,22 +20,24 @@ public class SimpleLinkedList<T> {
     private int n = 0;
 
     public void add(T data) {
-        Node node = new Node(data);
-        node.next = top;
-        top = node;
+        Node current = new Node(data);
+        current.next = top;
+        top = current;
         if (isEmpty()) {
             bot = top;
         }
         n++;
     }
 
-    private void addBot(T data) {
-        Node current = new Node(data);
-        if (isEmpty()) {
-            bot = top;
+    public void addBot(T data) {
+        Node node = new Node(data);
+        if (isEmpty()){
+            top = node;
+            bot = node;
+        } else {
+            bot.next = node;
+            bot = node;
         }
-        bot.next = current;
-        bot = current;
         n++;
     }
 

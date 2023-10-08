@@ -3,18 +3,18 @@ package week3.ex5;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class ex24 {
+public class Ex29 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        LinkedList<Integer> list = new LinkedList<>();
         int n = input.nextInt();
+        SimpleLinkedList<Integer> linkedList = new SimpleLinkedList<>();
         for (int i = 0; i < n; i++) {
-            list.add(input.nextInt());
+            linkedList.addBot(input.nextInt());
         }
+
         int k = input.nextInt();
-        while (k < 0 || k > n){
-            k = input.nextInt();
-        }
-        System.out.println(list.get(k));
+        linkedList.removeByIndex(k);
+
+        linkedList.print();
     }
 }

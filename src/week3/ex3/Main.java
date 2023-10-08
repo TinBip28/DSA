@@ -1,10 +1,12 @@
 package week3.ex3;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
 
         //Khởi tạo linked list
         SimpleLinkedList<Integer> list = new SimpleLinkedList<>();
@@ -29,7 +31,6 @@ public class Main {
 
         //Thay đổi gía trị tại vị trí index
         list.set(1,2023);
-
         //Kiểm tra xem linkedlist có chứa T data nhập vào không
         System.out.println(list.isContain(2023));
     }
