@@ -10,6 +10,15 @@ public class SimpleLinkedList<T> {
             next = null;
         }
 
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public T getData(){
+            return data;
+        }
+
         public void setData(T data) {
             this.data = data;
         }
@@ -18,10 +27,9 @@ public class SimpleLinkedList<T> {
             return next;
         }
 
-        public void setNext(Node next) {
-            this.next = next;
+        public void setNext(Node node) {
+            this.next = node;
         }
-
     }
 
     private Node top = null;
@@ -29,9 +37,9 @@ public class SimpleLinkedList<T> {
     private int n = 0;
 
     public void add(T data) {
-        Node node = new Node(data);
-        node.setNext(top);
-        top = node;
+        Node current = new Node(data);
+        current.next = top;
+        top = current;
         if (isEmpty()) {
             bot = top;
         }
@@ -39,17 +47,30 @@ public class SimpleLinkedList<T> {
     }
 
     public void addBot(T data) {
-        Node current = new Node(data);
+        Node node = new Node(data);
         if (isEmpty()) {
-            bot = top;
+            top = node;
+            bot = node;
+        } else {
+            bot.next = node;
+            bot = node;
         }
-        bot.setNext(current);
-        bot = current;
+        n++;
+    }
+
+    public void insert(T data, int index) {
+        checkBoundaries(index, n);
+        if (index == 0) {
+            top = new Node(data, top);
+        } else {
+            Node nodeByIndex = getNodeByIndex(index - 1);
+            nodeByIndex.setNext(new Node(data, nodeByIndex.getNext()));
+        }
         n++;
     }
 
     public T get(int i) {
-        return getNodeByIndex(i).data;
+        return getNodeByIndex(i).getData();
     }
 
     protected void checkBoundaries(int index, int limit) {
@@ -107,6 +128,17 @@ public class SimpleLinkedList<T> {
             top.next = null;
             n--;
         }
+    }
+
+    public void removeByIndex(int index) {
+        checkBoundaries(index, n - 1);
+        if (index == 0) {
+            top = top.getNext();
+        } else {
+            Node current = getNodeByIndex(index - 1);
+            current.setNext(current.getNext().getNext());
+        }
+        n--;
     }
 
     private Node getNodeByIndex(int index) {
