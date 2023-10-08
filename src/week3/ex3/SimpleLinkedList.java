@@ -19,37 +19,28 @@ public class SimpleLinkedList<T> {
     private Node bot = null;
     private int n = 0;
 
-    private void add(T data) {
-        Node newNode = new Node(data);
-        if (top == null) {
-            top = newNode;
-            bot = newNode;
-        } else {
-            newNode.next = top;
-            top = newNode;
+    public void add(T data) {
+        Node node = new Node(data);
+        node.next = top;
+        top = node;
+        if (isEmpty()) {
+            bot = top;
         }
         n++;
     }
 
     private void addBot(T data) {
-        Node newNode = new Node(data);
-        if (bot == null) {
-            top = newNode;
-            bot = newNode;
-        } else {
-            newNode.next = bot;
-            bot = newNode;
+        Node current = new Node(data);
+        if (isEmpty()) {
+            bot = top;
         }
+        bot.next = current;
+        bot = current;
         n++;
     }
 
     public T get(int i) {
-        checkBoundaries(i, size());
-        Node current = top;
-        for (int index = 0; index < i; i++) {
-            current = current.next;
-        }
-        return (T) current;
+        return getNodeByIndex(i).data;
     }
 
     protected void checkBoundaries(int index, int limit) {
@@ -60,13 +51,13 @@ public class SimpleLinkedList<T> {
 
     public void set(int i, T data) {
         checkBoundaries(i, n - 1);
-        Node current = (Node) get(i);
+        Node current = getNodeByIndex(i);
         current.setData(data);
     }
 
     public boolean isContain(T data) {
         for (int i = 0; i < size(); i++) {
-            Node current = (Node) get(i);
+            Node current = getNodeByIndex(i);
             if (current == data) {
                 return true;
             }
@@ -85,16 +76,18 @@ public class SimpleLinkedList<T> {
     public T removeTop() {
         if (top == null)
             return null;
+        T current = top.data;
         top = top.next;
         n--;
-        return (T) top;
+        return current;
     }
 
     public T removeBot() {
-        bot = (Node) get(size() - 2);
+        T data = bot.data;
+        bot = getNodeByIndex(n - 2);
         bot.next = null;
         n--;
-        return (T) bot;
+        return data;
     }
 
     public void remove(T data) {
@@ -105,5 +98,24 @@ public class SimpleLinkedList<T> {
             top.next = null;
             n--;
         }
+    }
+
+    private Node getNodeByIndex(int index) {
+        Node current;
+        if (index < 0 || index > n) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        current = top;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current;
+    }
+
+    public void print() {
+        for (int i = 0; i < n; i++) {
+            System.out.print(getNodeByIndex(i).data + " ");
+        }
+        System.out.println();
     }
 }
