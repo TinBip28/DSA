@@ -3,7 +3,7 @@ package week5.ex1;
 public interface BinaryTreeInterface<T> {
     T root();
     int size();
-    boolean Empty();
+    boolean isEmpty();
     int numChildren(T p);
     T parent(T p);
     T left(T p);

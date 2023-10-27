@@ -44,18 +44,15 @@ public class ArrayBinaryTree<E, T> implements BinaryTreeInterface<T> {
     }
 
     @Override
-    public boolean Empty() {
+    public boolean isEmpty() {
         return n == 0;
     }
 
     @Override
     public int numChildren(T p) {
         int count = 0;
-        int i = left(p) != null ? count++ : 0;
-        int j = right(p) != null ? count++ : 0;
-        i += numChildren(left(p));
-        j += numChildren(right(p));
-        count = i + j;
+        if (left(p) != null) count++;
+        if (right(p) != null) count++;
         return count;
     }
 
