@@ -1,14 +1,19 @@
 package week4.ex2;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 public class ArrayStack<E> implements StackInterface<E> {
     public static final int CAPACITY = 1000;
-    private E[] data;
+
+    private Random random = new Random();
+    private final E[] data;
     private int t = -1;
 
     public ArrayStack() {
+        data = (E[]) new Object[CAPACITY];
     }
 
     public ArrayStack(int capacity) {
@@ -48,6 +53,13 @@ public class ArrayStack<E> implements StackInterface<E> {
     @Override
     public Iterator<E> iterator() {
         return new StackEnum();
+    }
+    @Override
+    public String toString() {
+        return "ArrayStack{" +
+                "data=" + Arrays.toString(data) +
+                ", t=" + t +
+                '}';
     }
 
     class StackEnum implements Iterator<E> {

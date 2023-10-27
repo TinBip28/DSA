@@ -31,7 +31,6 @@ public class LinkedListStack<E> implements StackInterface<E> {
         if (stack == null) {
             System.out.println("Heap Underflow");
         }
-        stack = (stack).next;
         return stack.element;
     }
 
@@ -46,9 +45,15 @@ public class LinkedListStack<E> implements StackInterface<E> {
             return stack.element;
         } else {
             System.out.println("Stack Underflow");
-            ;
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "LinkedListStack{" +
+                "stack=" + stack +
+                '}';
     }
 
     @Override
