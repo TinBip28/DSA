@@ -10,6 +10,7 @@ public class ArrayBinaryTree<E, T> implements BinaryTreeInterface<T> {
     }
 
     public void setRoot(E element) {
+//      Đặt giá trị cho root tại cây rỗng
         array[1] = element;
     }
 
@@ -79,4 +80,11 @@ public class ArrayBinaryTree<E, T> implements BinaryTreeInterface<T> {
         if ((int) p + 1 > size()) throw new IndexOutOfBoundsException();
         return (T) array[(int) p + 1];
     }
+
+    public void printTreeArray() {
+        for (int i = 1; i <= n; i++) {
+            System.out.print("[" + array[i] + "]");
+        }
+    }
 }
+
