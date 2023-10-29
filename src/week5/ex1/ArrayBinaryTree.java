@@ -1,5 +1,8 @@
 package week5.ex1;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class ArrayBinaryTree<E, T> implements BinaryTreeInterface<T> {
     private E[] array;
     private int n = 0;
@@ -15,23 +18,15 @@ public class ArrayBinaryTree<E, T> implements BinaryTreeInterface<T> {
     }
 
     public void setLeft(int p, E element) {
-        int childLeft = (p * 2) + 1;
-
-        if (array[p] == null) {
-            System.out.printf("No parent found for child at %d\n", childLeft);
-        } else {
-            array[childLeft] = element;
-        }
+        int childLeft = (p * 2);
+        n = Math.max(childLeft, n);
+        array[childLeft] = element;
     }
 
     public void setRight(int p, E element) {
-        int childRight = (p * 2) + 2;
-
-        if (array[p] == null) {
-            System.out.printf("No parent found for child at %d\n", childRight);
-        } else {
-            array[childRight] = element;
-        }
+        int childRight = (p * 2) + 1;
+        n = Math.max(childRight, n);
+        array[childRight] = element;
     }
 
     @Override
@@ -77,13 +72,49 @@ public class ArrayBinaryTree<E, T> implements BinaryTreeInterface<T> {
 
     @Override
     public T sibling(T p) {
-        if ((int) p + 1 > size()) throw new IndexOutOfBoundsException();
-        return (T) array[(int) p + 1];
+        if (p == array[1]){
+            return null;
+        }
+        if ((int) p % 2 == 0){
+            return (T) array[(int) p + 1];
+        }
+        return (T) array[(int) p - 1];
     }
 
-    public void printTreeArray() {
+    public void printTreeArrayFormat() {
         for (int i = 1; i <= n; i++) {
             System.out.print("[" + array[i] + "]");
+        }
+        System.out.println("\n");
+    }
+
+    public void printBinaryTree(int p, int level) {
+        if (p <= n && array[p] != null) {
+            printBinaryTree(2 * p, level + 1);
+            if (level != 0) {
+                for (int i = 0; i < level; i++) {
+                    System.out.print("\t\t");
+                }
+                System.out.println(" " + array[p]);
+            } else {
+                System.out.print(array[p]);
+            }
+            printBinaryTree(2 * p + 1, level + 1);
+        }
+    }
+
+    public void toFile(int p, int level, FileWriter file) throws IOException {
+        if (p <= n && array[p] != null) {
+            toFile(2 * p , level + 1, file);
+            if (level != 0) {
+                for (int i = 0; i < level; i++) {
+                    file.write("\t\t");
+                }
+                file.write("\t\t" + array[p] + "\n");
+            } else {
+                file.write((Integer) array[p]);
+            }
+            toFile(2 * p + 1, level + 1,file);
         }
     }
 }

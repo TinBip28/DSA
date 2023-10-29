@@ -1,6 +1,8 @@
 package week5.ex1;
 
 import javax.lang.model.element.UnknownElementException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
     protected static class Node<E> {
@@ -32,14 +34,18 @@ public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
         if (p == null) {
             throw new IndexOutOfBoundsException("Can not define p");
         }
-        return p.left != null ? p.left : new Node<E>(element, p, null, null);
+        n++;
+        p.left = p.left != null ? p.left : new Node<E>(element, p, null, null);
+        return p.left;
     }
 
     public Node<E> addRight(Node p, E element) {
         if (p == null) {
             throw new IndexOutOfBoundsException("Can not define p");
         }
-        return p.right != null ? p.right : new Node<E>(element, p, null, null);
+        n++;
+        p.right = p.right != null ? p.right : new Node<E>(element, p, null, null);
+        return p.right;
     }
 
     public void set(Node p, E element) {
@@ -95,6 +101,36 @@ public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
             return (T) parrent.left;
         } else {
             return (T) parrent.right;
+        }
+    }
+
+    public void printTree(Node node, int level) {
+        if (node != null) {
+            printTree(node.right, level + 1);
+            if (level != 0) {
+                for (int i = 0; i < level - 1; i++) {
+                    System.out.print("\t\t");
+                }
+                System.out.print("\t\t" + node.element + "\n");
+            } else {
+                System.out.print((Integer) node.element + "\n");
+            }
+            printTree(node.left, level + 1);
+        }
+    }
+
+    public void writeTree(Node node, int level, FileWriter fileWriter) throws IOException {
+        if (node != null) {
+            writeTree(node.right, level + 1, fileWriter);
+            if (level != 0) {
+                for (int i = 0; i < level - 1; i++) {
+                    fileWriter.write("\t\t");
+                }
+                fileWriter.write("\t\t" + node.element + "\n");
+            } else {
+                fileWriter.write((Integer) node.element + "\n");
+            }
+            writeTree (node.left, level + 1,fileWriter);
         }
     }
 }
