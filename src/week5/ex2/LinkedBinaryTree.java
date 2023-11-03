@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
-    protected static class Node<E> {
+    public static class Node<E> {
         protected E element;
         protected Node<E> parent;
         protected Node<E> left;

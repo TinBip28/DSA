@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
-    protected static class Node<E> {
+    public static class Node<E> {
         private E element;
         private Node<E> parent;
         private Node<E> left;
@@ -18,6 +18,8 @@ public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
             this.right = rightChild;
         }
     }
+
+    private int height = -1;
 
     private int n;
     private Node<E> root;
@@ -130,7 +132,82 @@ public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
             } else {
                 fileWriter.write((Integer) node.element + "\n");
             }
-            writeTree (node.left, level + 1,fileWriter);
+            writeTree(node.left, level + 1, fileWriter);
         }
+    }
+
+    public static class SumLeftLeaves {
+        public int sumOfLeftLeaves(Node root) {
+            return helper(root);
+        }
+
+        int helper(Node root) {
+            if (root == null) return 0;
+            int s = 0;
+            if (root.left != null && root.left.left == null && root.left.right == null) {
+                s += (int) root.left.element;
+            }
+            s += helper(root.left);
+            s += helper(root.right);
+            return s;
+        }
+    }
+
+    public int findDepth(Node root, int x) {
+
+        // Base case
+        if (root == null)
+            return -1;
+
+        // Initialize distance as -1
+        int dist = -1;
+
+        // Check if x is current node=
+        if (((int) root.element == x) ||
+
+                // Otherwise, check if x is
+                // present in the left subtree
+                (dist = findDepth(root.left, x)) >= 0 ||
+
+                // Otherwise, check if x is
+                // present in the right subtree
+                (dist = findDepth(root.right, x)) >= 0)
+
+            // Return depth of the node
+            return dist + 1;
+
+        return dist;
+    }
+
+    public int findHeightUtil(Node root, int x) {
+
+        // Base Case
+        if (root == null) {
+            return -1;
+        }
+
+        // Store the maximum height of
+        // the left and right subtree
+        int leftHeight = findHeightUtil(root.left, x);
+
+        int rightHeight = findHeightUtil(root.right, x);
+
+        // Update height of the current node
+        int ans = Math.max(leftHeight, rightHeight) + 1;
+
+        // If current node is the required node
+        if ((int) root.element == x)
+            height = ans;
+
+        return ans;
+    }
+
+    public int findHeight(Node root, int x) {
+
+        // Stores height of the Tree
+        findHeightUtil(root, x);
+
+        // Return the height
+        return height;
     }
 }

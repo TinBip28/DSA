@@ -46,5 +46,18 @@ public class BinaryTree {
             traverseInOrder(node.right);
         }
     }
+
+    public int countLeaf(Node current) {
+        int count = 0;
+        if (current != null) {
+            if (current.left == null && current.right == null)
+                count++;
+            else {
+                count += countLeaf(current.left);
+                count += countLeaf(current.right);
+            }
+        }
+        return count;
+    }
 }
 
