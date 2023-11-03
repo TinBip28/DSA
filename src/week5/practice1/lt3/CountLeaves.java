@@ -1,4 +1,4 @@
-package week5.lt3;
+package week5.practice1.lt3;
 
 import week5.ex1.LinkedBinaryTree;
 
