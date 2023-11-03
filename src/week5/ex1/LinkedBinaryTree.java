@@ -3,6 +3,8 @@ package week5.ex1;
 import javax.lang.model.element.UnknownElementException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
     public static class Node<E> {
@@ -209,5 +211,20 @@ public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
 
         // Return the height
         return height;
+    }
+
+    public int getLeafCount(Node root){
+        // initializing queue for level order traversal
+        Queue<Node> q = new LinkedList<Node>();
+        q.add(root);
+        // initializing count variable
+        int count = 0;
+        while(!q.isEmpty()){
+            Node temp = q.poll();
+            if(temp.left == null && temp.right == null) count++;
+            if(temp.left != null) q.add(temp.left);
+            if(temp.right != null) q.add(temp.right);
+        }
+        return count;
     }
 }
