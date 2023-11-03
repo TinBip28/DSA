@@ -70,7 +70,7 @@ public class ExpressionTree<E> extends LinkedBinaryTree {
             }
             i++;
         }
-        return Math.round(values.pop() * 100) / 100.0;
+        return Math.round(values.pop() * 100 * -1) / 100.0;
     }
 
     public static boolean isNumber(String s) {
