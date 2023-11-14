@@ -13,7 +13,7 @@ public class UnsortedArrayPriorityQueue<K extends Comparable, E> implements Prio
 
     @Override
     public void insert(Entry<K, E> entry) {
-        checkIndex(n);
+        checkIndex();
         array[n] = (ArrEntry<K, E>) entry;
         n++;
     }
@@ -26,13 +26,13 @@ public class UnsortedArrayPriorityQueue<K extends Comparable, E> implements Prio
     @Override
     public Entry<K, E> removeMin() {
         if (isEmpty()) return null;
-        K minKey = min().getKey();
-        int minIndex = getIndex(minKey);
+        int minIndex = getIndex(min().getKey());
         for (int i = minIndex; i < size(); i++) {
             array[i] = array[i + 1];
         }
         n--;
-        return array[minIndex];
+        System.out.print("New min ");
+        return min();
     }
 
     @Override
@@ -65,6 +65,10 @@ public class UnsortedArrayPriorityQueue<K extends Comparable, E> implements Prio
         public E getValue() {
             return element;
         }
+        @Override
+        public String toString() {
+            return "{" + key + "," + element + '}';
+        }
     }
 
     private int getIndex(K key) {
@@ -77,8 +81,8 @@ public class UnsortedArrayPriorityQueue<K extends Comparable, E> implements Prio
         return index;
     }
 
-    private void checkIndex(int length) {
-        if (length >= array.length || length < 0) {
+    private void checkIndex() {
+        if (size() >= array.length) {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
@@ -94,9 +98,10 @@ public class UnsortedArrayPriorityQueue<K extends Comparable, E> implements Prio
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("[");
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < size() - 1; i++) {
             result.append(array[i] + " ");
         }
+        result.append(array[size() - 1]);
         result.append("]");
         return result.toString();
     }
