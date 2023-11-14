@@ -40,7 +40,7 @@ public class Ex3 {
         return (stack.isEmpty());
     }
 
-    static int Prec(char operator) {
+    public static int Prec(char operator) {
         return switch (operator) {
             case '+', '-' -> 1;
             case '*', '/' -> 2;

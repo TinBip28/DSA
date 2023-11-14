@@ -8,7 +8,7 @@ public class PrimitiveDataTypes {
 
     public static void main(String[] args) {
         System.out.print("Boolean: ");
-        boolean a = input.nextBoolean();
+        boolean a = input.nextBoolean(); //true or false
 
         System.out.print("Char: ");
         char b = input.next().charAt(0);
