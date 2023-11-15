@@ -1,8 +1,8 @@
 package week6.ex1;
 
 public class SortedArrayPriorityQueue<K extends Comparable, E> implements PriorityQueueInterface<K, E> {
-    ArrEntry<K, E>[] array;
-    int n = 0;
+    protected ArrEntry<K, E>[] array;
+    protected int n = 0;
     int defaultSize = 1000;
 
     public SortedArrayPriorityQueue() {
