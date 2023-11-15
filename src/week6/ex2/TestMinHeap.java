@@ -11,7 +11,7 @@ public class TestMinHeap {
         minHeapPriorityQueue.print();
         System.out.println();
 
-        minHeapPriorityQueue.downHeap();
+        minHeapPriorityQueue.upHeap();
         minHeapPriorityQueue.print();
         System.out.println();
 

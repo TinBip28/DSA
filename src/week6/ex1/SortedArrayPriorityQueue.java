@@ -90,7 +90,7 @@ public class SortedArrayPriorityQueue<K extends Comparable, E> implements Priori
     public String toString() {
         StringBuilder result = new StringBuilder("[");
         for (int i = 0; i < size() - 1; i++) {
-            result.append(array[i] + " ");
+            result.append(array[i]).append(" ");
         }
         result.append(array[size() - 1]);
         result.append("]");
