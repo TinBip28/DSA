@@ -56,7 +56,7 @@ public class SortedArrayPriorityQueue<K extends Comparable, E> implements Priori
             array[0] = (ArrEntry<K, E>) entry;
         } else {
             int i = n - 1;
-            while (i >= 0 && array[i].key.compareTo(entry.getKey()) <= 0) {
+            while (i >= 0 && array[i].key.compareTo(entry.getKey()) >= 0) {
                 array[i + 1] = array[i];
                 i--;
             }
