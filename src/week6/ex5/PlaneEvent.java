@@ -13,19 +13,6 @@ public class PlaneEvent implements Comparable<PlaneEvent>{
         this.activity = activity;
         this.company = company;
     }
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getActivity() {
-        return activity;
-    }
-
     @Override
     public int compareTo(PlaneEvent o) {
         return this.time.compareTo(o.time);

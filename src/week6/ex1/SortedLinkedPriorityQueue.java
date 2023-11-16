@@ -69,7 +69,7 @@ public class SortedLinkedPriorityQueue<K extends Comparable, E> implements Prior
 
     @Override
     public Entry<K, E> min() {
-        return null;
+        return head;
     }
 
     @Override

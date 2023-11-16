@@ -87,7 +87,7 @@ public class UnsortedArrayPriorityQueue<K extends Comparable, E> implements Prio
         }
     }
 
-    ArrEntry<K, E>[] array;
+    protected ArrEntry<K, E>[] array;
     int n = 0;
     int defaultsize = 1000;
 

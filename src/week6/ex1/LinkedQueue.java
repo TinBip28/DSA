@@ -25,6 +25,7 @@ public class LinkedQueue {
         queue.insert(2,'E');
         queue.insert(3,'F');
         queue.insert(5,'D');
+        System.out.println(queue.min()  );
         System.out.println(queue);
     }
 }

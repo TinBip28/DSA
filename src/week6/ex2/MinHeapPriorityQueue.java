@@ -2,10 +2,11 @@ package week6.ex2;
 
 import week6.ex1.Entry;
 import week6.ex1.SortedArrayPriorityQueue;
+import week6.ex1.UnsortedArrayPriorityQueue;
 
 import java.util.Arrays;
 
-public class MinHeapPriorityQueue<K extends Comparable, E> extends SortedArrayPriorityQueue<K, E> {
+public class MinHeapPriorityQueue<K extends Comparable, E> extends UnsortedArrayPriorityQueue<K, E> {
     ArrEntry<K, E> heapPQ[];
 
     public MinHeapPriorityQueue() {
@@ -14,34 +15,27 @@ public class MinHeapPriorityQueue<K extends Comparable, E> extends SortedArrayPr
 
     public void upHeap() {
         int current = size() - 1;
-        int parent = (current) / 2;
-        while (heapPQ[parent].getKey().compareTo(heapPQ[current].getKey()) > 0 && current != 0) {
-            swap(parent, current);
+        while (current > 0) {
+            int parent = current / 2;
+            if (heapPQ[current].getKey().compareTo(heapPQ[parent].getKey()) >= 0) break;
+            swap(current, parent);
             current = parent;
-            parent = (current) / 2;
         }
     }
 
-    public void downHeap() {
-        int current = 0;
-        while (2 * current < size()) {
-            int leftChild = 2 * current + 1;
-            int rightChild = leftChild + 1;
-            int minIdx = current;
-
-            if (leftChild < size() && heapPQ[leftChild].getKey().compareTo(heapPQ[minIdx].getKey()) < 0) {
-                minIdx = leftChild;
+    public void downHeap(int j) {
+        while ((2 * j + 1) < size()) { // continue to bottom (or break statement)
+            int leftIndex = j * 2 + 1;
+            int smallChildIndex = leftIndex; // although right may be smaller
+            if ((2 * j + 2) < size()) {
+                int rightIndex = j * 2 + 2;
+                if (heapPQ[leftIndex].getKey().compareTo(heapPQ[rightIndex].getKey()) > 0)
+                    smallChildIndex = rightIndex; // right child is smaller
             }
-
-            if (rightChild < size() && heapPQ[rightChild].getKey().compareTo(heapPQ[minIdx].getKey()) < 0) {
-                minIdx = rightChild;
-            }
-
-            if (minIdx != current) {
-                swap(current, minIdx);
-            } else {
-                break;
-            }
+            if (heapPQ[smallChildIndex].getKey().compareTo(heapPQ[j].getKey()) >= 0)
+                break; // heap property has been restored
+            swap(j, smallChildIndex);
+            j = smallChildIndex; // continue at position of the child
         }
     }
 
