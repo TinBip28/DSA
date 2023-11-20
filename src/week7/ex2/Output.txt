@@ -1,0 +1,9 @@
+Linked Binary Tree
+Binary tree seaching: 14400
+Binary searching: 9801000
+Searching normal: 4908600
+
+Binary tree seaching: 13000
+Binary searching: 68604800
+Searching normal: 30572200
+

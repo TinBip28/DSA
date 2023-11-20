@@ -1,6 +1,5 @@
 package week5.ex1;
 
-import javax.lang.model.element.UnknownElementException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;

@@ -13,14 +13,15 @@ public class Controller extends JFrame {
 
 
         setTitle("Airport Event Viewer");
-        setSize(500, 300);
+        setSize(700, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
+
 
         JPanel panel = new JPanel();
         JButton addButton = new JButton("Add Event");
         JButton showButton = new JButton("Show Events");
-        eventTextArea = new JTextArea(10, 30);
+        eventTextArea = new JTextArea(30, 50);
         JScrollPane scrollPane = new JScrollPane(eventTextArea);
 
 
@@ -45,13 +46,12 @@ public class Controller extends JFrame {
             airPort.add(newEvent4);
         });
 
-        // Add ActionListener for the "Show Events" button
         showButton.addActionListener(e -> {
             eventTextArea.setText(""); // Clear previous text
             try {
                 eventTextArea.append("Upcoming Event:\n" + airPort.showEvent() + "\n");
             } catch (IllegalStateException ex) {
-                eventTextArea.append("Khong co chuyen bay hien hanh\n");
+                eventTextArea.append(airPort.upComing().toString() + "\n");
             }
         });
     }

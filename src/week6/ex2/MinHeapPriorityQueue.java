@@ -23,20 +23,26 @@ public class MinHeapPriorityQueue<K extends Comparable, E> extends UnsortedArray
         }
     }
 
-    public void downHeap(int j) {
-        while ((2 * j + 1) < size()) { // continue to bottom (or break statement)
-            int leftIndex = j * 2 + 1;
-            int smallChildIndex = leftIndex; // although right may be smaller
-            if ((2 * j + 2) < size()) {
-                int rightIndex = j * 2 + 2;
-                if (heapPQ[leftIndex].getKey().compareTo(heapPQ[rightIndex].getKey()) > 0)
-                    smallChildIndex = rightIndex; // right child is smaller
+    public void downHeap() {
+        int current = 0;
+        while (hasLeftChild(current)){
+            int leftChild = leftIndex(current);
+            int smallIndex = leftChild;
+
+            if (hasRightChild(current)){
+                int rightChild = rightIndex(current);
+                if (heapPQ[leftChild].getKey().compareTo(heapPQ[rightChild].getKey()) > 0){
+                    smallIndex = rightChild;
+                }
             }
-            if (heapPQ[smallChildIndex].getKey().compareTo(heapPQ[j].getKey()) >= 0)
-                break; // heap property has been restored
-            swap(j, smallChildIndex);
-            j = smallChildIndex; // continue at position of the child
+
+            if (heapPQ[smallIndex].getKey().compareTo(heapPQ[current].getKey()) >= 0){
+                break;
+            }
+            swap(current, smallIndex);
+            current = smallIndex;
         }
+
     }
 
     private void swap(int i, int j) {
@@ -49,6 +55,22 @@ public class MinHeapPriorityQueue<K extends Comparable, E> extends UnsortedArray
         for (int i = 0; i < size(); i++) {
             System.out.print(heapPQ[i] + " ");
         }
+    }
+
+    private boolean hasLeftChild(int index) {
+        return leftIndex(index) < size();
+    }
+
+    private boolean hasRightChild(int index) {
+        return rightIndex(index) < size();
+    }
+
+    private int leftIndex(int index) {
+        return 2 * index + 1;
+    }
+
+    private int rightIndex(int index) {
+        return 2 * index + 2;
     }
 
 }

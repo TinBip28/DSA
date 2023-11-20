@@ -8,10 +8,11 @@ public class TestMinHeap {
         minHeapPriorityQueue.insert(1, 'C');
         minHeapPriorityQueue.insert(4, 'D');
 
+
         minHeapPriorityQueue.print();
         System.out.println();
 
-        minHeapPriorityQueue.downHeap(0);
+        minHeapPriorityQueue.downHeap();
         minHeapPriorityQueue.print();
         System.out.println();
 

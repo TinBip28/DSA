@@ -20,7 +20,7 @@ public class StockExchange {
     }
 
     public void execute() {
-        while (!buy.isEmpty() && !sell.isEmpty()) {
+        while (!buy.isEmpty() && sell != null) {
             Stock buyOrder = buy.poll();
             Stock sellOrder = sell.poll();
             assert buyOrder != null;
