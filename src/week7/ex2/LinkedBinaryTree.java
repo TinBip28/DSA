@@ -126,34 +126,4 @@ public class LinkedBinaryTree<E, T> implements BinaryTreeInterface<T> {
 
         inorder(node.right, sorted);
     }
-
-    public void printTree(Node<E> node, int level) {
-        if (node != null) {
-            printTree(node.right, level + 1);
-            if (level != 0) {
-                for (int i = 0; i < level - 1; i++) {
-                    System.out.print("\t\t");
-                }
-                System.out.print("\t\t" + node.element + "\n");
-            } else {
-                System.out.print(node.element + "\n");
-            }
-            printTree(node.left, level + 1);
-        }
-    }
-
-    public void writeTree(Node<E> node, int level, FileWriter fileWriter) throws IOException {
-        if (node != null) {
-            writeTree(node.right, level + 1, fileWriter);
-            if (level != 0) {
-                for (int i = 0; i < level - 1; i++) {
-                    fileWriter.write("\t\t");
-                }
-                fileWriter.write("\t\t" + node.element + "\n");
-            } else {
-                fileWriter.write(node.element + "\n");
-            }
-            writeTree(node.left, level + 1, fileWriter);
-        }
-    }
 }
