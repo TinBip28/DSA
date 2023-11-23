@@ -1,13 +1,7 @@
 package week7.ex1;
 
-public interface ListInterface<T> extends Iterable<T> {
+public interface ListInterface<T> {
     public void add(T data);
-
-    public Object get(int i);
-
-    public void set(int i, T data);
-
-    public void remove(T data);
 
     public void isContain(T data);
 

@@ -1,10 +1,7 @@
 package week7.ex1;
 
-import week3.ex2.ListInterface;
-import week3.ex2.MyArrayListIterator;
-
 import java.util.Arrays;
-import java.util.Iterator;
+
 
 public class UnSortedArrayList<T> implements ListInterface<T> {
     private T[] array;
@@ -28,35 +25,6 @@ public class UnSortedArrayList<T> implements ListInterface<T> {
     }
 
     @Override
-    public Object get(int i) {
-        checkBoundaries(i, size());
-        return array[i];
-    }
-
-    @Override
-    public void set(int i, T data) {
-        checkBoundaries(i, size());
-        if (size() == array.length) {
-            enlarge();
-        }
-        array[i] = data;
-    }
-
-    @Override
-    public void remove(Object data) {
-        int index = 0;
-        for (int i = 0; i < size(); i++) {
-            if (data.equals(array[i])) {
-                index = i;
-            }
-        }
-
-        for (int i = index; i < size() - 1; i++) {
-            array[index] = array[index + 1];
-        }
-    }
-
-    @Override
     public void isContain(Object data) {
         for (T ele : array) {
             if (data.equals(ele)) {
@@ -73,11 +41,6 @@ public class UnSortedArrayList<T> implements ListInterface<T> {
     @Override
     public boolean isEmpty() {
         return size() == 0;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new MyArrayListIterator(array);
     }
 
     public boolean hasNext() {

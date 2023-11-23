@@ -1,7 +1,7 @@
 package week7.ex2;
 
 import week5.ex1.BinaryTreeInterface;
-import week5.ex1.LinkedBinaryTree;
+
 
 public class LinkedBinarySearchTree<E, T> implements BinaryTreeInterface<T> {
     public static class Node<E> {
@@ -80,14 +80,6 @@ public class LinkedBinarySearchTree<E, T> implements BinaryTreeInterface<T> {
 
     private int n = 0;
     Node<E> root;
-
-    public Node<E> addRoot(E element) {
-        if (isEmpty()) {
-            root = new Node<>(element);
-        }
-        n++;
-        return root;
-    }
 
     public void insert(E element) {
         root = insertRec(root, element);
@@ -178,18 +170,6 @@ public class LinkedBinarySearchTree<E, T> implements BinaryTreeInterface<T> {
 
             // Delete Successor and return root
             return root;
-        }
-    }
-
-    void inorder() {
-        inorderRec(root);
-    }
-
-    public void inorderRec(Node<E> root) {
-        if (root != null) {
-            inorderRec(root.left);
-            System.out.print(root.element + " ");
-            inorderRec(root.right);
         }
     }
 
