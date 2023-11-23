@@ -40,14 +40,43 @@ public class LinkedList<T> {
         n++;
     }
 
+    public void sortList() {
+        Node current = top, index = null;
+        T temp;
+
+        if (top == null) {
+            return;
+        } else {
+            while (current != null) {
+                // Node index will point to node next to
+                // current
+                index = current.next;
+
+                while (index != null) {
+                    // If current node's data is greater
+                    // than index's node data, swap the data
+                    // between them
+                    if ((int) current.data > (int) index.data) {
+                        temp = current.data;
+                        current.data = index.data;
+                        index.data = temp;
+                    }
+
+                    index = index.next;
+                }
+                current = current.next;
+            }
+        }
+    }
+
     public T get(int i) {
         return getNodeByIndex(i).data;
     }
 
     public T search(Node head, T data) {
         Node current = head;
-        while (current != null){
-            if (current.data == data){
+        while (current != null) {
+            if (current.data == data) {
                 return current.data;
             }
             current = current.next;
@@ -73,10 +102,9 @@ public class LinkedList<T> {
         return slow;
     }
 
-    public Node binarySearch(Node head, T value) {
+    public T binarySearch(Node head, T value) {
         Node start = head;
         Node last = null;
-
         do {
             // Find Middle
             Node mid = middleNode(start, last);
@@ -87,7 +115,7 @@ public class LinkedList<T> {
 
             // If value is present at middle
             if (mid.data == value)
-                return mid;
+                return mid.data;
 
                 // If value is less than mid
             else if ((int) mid.data > (int) value) {
@@ -116,5 +144,14 @@ public class LinkedList<T> {
         return current;
     }
 
-
+    @Override
+    public String toString() {
+        Node current = top;
+        StringBuilder builder = new StringBuilder();
+        while (current != null){
+            builder.append(current.data).append(" ");
+            current = current.next;
+        }
+        return builder.toString();
+    }
 }
