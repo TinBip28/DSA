@@ -112,60 +112,45 @@ public class AVLTree<E, T> implements BinaryTreeInterface<T> {
     int getBalance(Node<E> N) {
         if (N == null)
             return 0;
-
         return height(N.left) - height(N.right);
     }
 
     public Node<E> insertToAVL(Node<E> node, E key) {
 
-        /* 1.  Perform the normal BST insertion */
-        if (node == null)
-            return (new Node<E>(key));
-
-        if ((int) key < (int) node.element)
+        if (node == null) {
+            return (new Node<>(key));
+        }
+        if ((int) key < (int) node.element) {
             node.left = insertToAVL(node.left, key);
-        else if ((int) key > (int) node.element)
+        } else if
+        ((int) key > (int) node.element) {
             node.right = insertToAVL(node.right, key);
-        else // Duplicate keys not allowed
+        } else {
             return node;
+        }
+        node.height = 1 + Math.max(height(node.left), height(node.right));
 
-        /* 2. Update height of this ancestor node */
-        node.height = 1 + Math.max(height(node.left),
-                height(node.right));
-
-        /* 3. Get the balance factor of this ancestor
-              node to check whether this node became
-              unbalanced */
         int balance = getBalance(node);
 
-        // If this node becomes unbalanced, then there
-        // are 4 cases Left Left Case
-        if (balance > 1 && (int) key < (int) node.left.element)
+        if (balance > 1 && (int) key < (int) node.left.element) {
             return rightRotate(node);
-
-        // Right Right Case
-        if (balance < -1 && (int) key > (int) node.right.element)
+        }
+        if (balance < -1 && (int) key > (int) node.right.element) {
             return leftRotate(node);
-
-        // Left Right Case
+        }
         if (balance > 1 && (int) key > (int) node.left.element) {
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
 
-        // Right Left Case
         if (balance < -1 && (int) key < (int) node.right.element) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         }
 
-        /* return the (unchanged) node pointer */
         return node;
     }
 
-    // A utility function to print preorder traversal
-    // of the tree.
-    // The function also prints height of every node
 
     public void printTree(Node<E> node, int level) {
         if (node != null) {

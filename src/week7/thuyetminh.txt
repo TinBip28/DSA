@@ -1,0 +1,5 @@
+Gói combo thực hiện là : combo 2
+Bài làm có sử dụng các thuật toán : Linear Search, Binary Search, đệ quy, bubble sort
+Sử dụng fileWriter cho việc in bài ra file.txt
+Sử dụng nanoTime() cho việc tính thời gian
+tài liệu tham khảo trang greekforgeeks.
