@@ -1,4 +1,4 @@
-package week8.ex1;
+package week8.danhsachlienketdothi;
 
 public interface GraphInterface<V, E> {
     int numVertices();

@@ -1,36 +1,36 @@
-package week8.ex1;
+package week8.ex2;
 
-import javax.management.InvalidAttributeValueException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class Graph {
+public class DirectedGraph {
     private int vertices;
     private int edges;
     private int[][] graph;
 
-    public Graph(int vertices) {
+    public DirectedGraph(int vertices) {
         this.vertices = vertices;
         this.graph = new int[vertices][vertices];
     }
 
-    public void insertEdge(int start, int end) {
+    public void insertEdge(int start, int end, int weight) {
         checkOutOfBoundIndex(start, end);
-        graph[start][end] = 1;
-        graph[end][start] = 1;
+        graph[start][end] = weight;
         edges++;
     }
 
     public void insertVertex() {
         vertices++;
         int i;
-
         for (i = 0; i < vertices; ++i) {
             graph[i][vertices - 1] = 0;
             graph[vertices - 1][i] = 0;
         }
     }
 
-    public void removeVertex(int vertex){
+    public void removeVertex(int vertex) {
         checkOutOfBound(vertex);
         int i;
         while (vertex < vertices) {
@@ -53,7 +53,7 @@ public class Graph {
     public Map<Integer, Integer> incomingEdges(int vertex) {
         Map<Integer, Integer> imcoimg = new HashMap<>();
         for (int i = 0; i < vertices; i++) {
-            if (graph[i][vertex] == 1) {
+            if (graph[i][vertex] != 0) {
                 imcoimg.put(i, vertex);
             }
         }
@@ -63,14 +63,14 @@ public class Graph {
     public Map<Integer, Integer> outcomingEdges(int vertex) {
         Map<Integer, Integer> outcoming = new HashMap<>();
         for (int i = 0; i < vertices; i++) {
-            if (graph[vertex][i] == 1) outcoming.put(vertex, i);
+            if (graph[vertex][i] != 0) outcoming.put(vertex, i);
         }
         return outcoming;
     }
 
-    public int opposite(int vertex, int[] edges) {
+    public int opposite(int vertex) {
         for (int i = 0; i < graph.length; i++) {
-            if (graph[vertex][i] == 1 && i != edges[0]) {
+            if (graph[vertex][i] != 0 || graph[i][vertex] != 0) {
                 return i;
             }
         }
@@ -79,7 +79,7 @@ public class Graph {
 
     public int[] getEdge(int u, int v) {
         checkOutOfBoundIndex(u, v);
-        if (graph[u][v] == graph[v][u] && graph[u][v] == 1) {
+        if (graph[u][v] != 0) {
             try {
                 return new int[]{u, v};
             } catch (IllegalStateException e) {
@@ -89,12 +89,18 @@ public class Graph {
         return null;
     }
 
-    public int[] endVertices(int edge) {
+    public int[] endVertices(int weight) {
         int[] vertices = new int[2];
-        int limit = 0;
-        for (int i = 0; i < graph.length && limit < 2; i++) {
-            if (graph[edge][i] == 1) {
-                vertices[limit++] = i;
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph.length; j++) {
+                if (graph[i][j] == weight) {
+                    vertices[0] = i;
+                    vertices[1] = j;
+                }
+                if (graph[j][i] == weight) {
+                    vertices[0] = j;
+                    vertices[1] = i;
+                }
             }
         }
         return vertices;
@@ -104,7 +110,7 @@ public class Graph {
         Set<Integer> list = new HashSet<>();
         for (int i = 0; i < graph.length; i++) {
             for (int j = 0; j < graph.length; j++) {
-                if (graph[i][j] == 1) list.add(i);
+                if (graph[i][j] != 0) list.add(i);
             }
         }
         return list;
@@ -127,7 +133,7 @@ public class Graph {
         StringBuilder sb = new StringBuilder();
         sb.append("\t");
         for (int i = 0; i < vertices; i++) {
-            sb.append(i+1).append("\t");
+            sb.append(i + 1).append("\t");
         }
         sb.append("\n");
         for (int i = 0; i < vertices; i++) {

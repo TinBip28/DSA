@@ -1,4 +1,4 @@
-package week8.ex1;
+package week8.danhsachlienketdothi;
 
 public class GraphTest {
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class GraphTest {
         graph.insertVertex("D");
         graph.insertVertex("E");
         graph.insertVertex("F");
-        graph.insertEdge("A", "B", 1);
+        graph.insertEdge("A", "B");
         graph.insertEdge("A", "C", 2);
         graph.insertEdge("B", "D", 3);
         graph.insertEdge("E", "F", 4);
