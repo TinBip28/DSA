@@ -67,7 +67,6 @@ public class Ex3 {
         int l = infix.length();
         Stack<Character> stack = new Stack<>();
         String[] output = new String[infix.length()];
-
         for (int i = 0; i < l; i++) {
 
             // If the scanned character is an

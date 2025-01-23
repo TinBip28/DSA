@@ -27,7 +27,6 @@ public class BinaryTree {
         if (current == null) {
             return new Node(data);
         }
-
         if (data <= current.data) {
             current.left = addNodeRecursive(current.left, data);
         } else if (data > current.data) {
@@ -35,7 +34,6 @@ public class BinaryTree {
         } else {
             return current;
         }
-
         return current;
     }
 
